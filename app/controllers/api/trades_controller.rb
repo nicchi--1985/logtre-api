@@ -47,8 +47,8 @@ module Api
 
       # 単periodかつ商品別サマリ
       def product_summary
-        month_period = params["month_period"].to_i || 1
-        q_date = Date.parse(params["target_period"]) || Date.today
+        month_period = params["month_period"] ? params["month_period"].to_i : 1
+        q_date = params["target_period"] ? Date.parse(params["target_period"]) : Date.today
         q_start = q_date.months_ago(month_period-1).beginning_of_month
         q_end = q_date.end_of_month
         @trades = Trade.where(:implimentation_date => q_start...q_end)
